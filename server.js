@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var cors = require('cors');
 var express = require('express');
 var pg = require('pg');
 
@@ -16,6 +17,7 @@ types.setTypeParser(20, function(val) {
 
 var app = express();
 
+app.use(cors());
 
 function pgError(error) {
   console.log("PG error", error);
@@ -48,6 +50,6 @@ app.get('/ein/:ein', function (req, res) {
 
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(process.env.PORT, function () {
+  console.log('Example app listening on port ' + process.env.PORT);
 });
