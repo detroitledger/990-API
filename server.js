@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var _ = require('lodash');
 var cors = require('cors');
 var express = require('express');
