@@ -52,6 +52,7 @@ app.get('/ein/:ein', function (req, res) {
 
 });
 
-app.listen(process.env.PORT, function () {
+var host = process.env.HOST || undefined;
+app.listen(process.env.PORT, host, function () {
   console.log('Example app listening on port ' + process.env.PORT);
 });
