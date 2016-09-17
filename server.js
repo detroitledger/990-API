@@ -3,6 +3,9 @@
 var _ = require('lodash');
 var cors = require('cors');
 var express = require('express');
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
 var pg = require('pg');
 
 var config = {
@@ -53,6 +56,17 @@ app.get('/ein/:ein', function (req, res) {
 });
 
 var host = process.env.HOST || undefined;
-app.listen(process.env.PORT, host, function () {
-  console.log('Example app listening on port ' + process.env.PORT);
+
+http.createServer(app).listen(process.env.PORT, host, function() {
+  console.log('990 app listening on port ' + process.env.PORT);
 });
+
+if (process.env.CERT_PATH) {
+  console.log("Starting HTTPS server");
+  https.createServer({
+    cert: fs.readFileSync(process.env.CERT_PATH),
+    key: fs.readFileSync(process.env.KEY_PATH)
+  }, app).listen(process.env.SSLPORT, host, function() {
+    console.log('990 app listening on port ' + process.env.SSLPORT);
+  });
+}

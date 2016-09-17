@@ -9,6 +9,9 @@
 Copy `sample.env` to `.env` and fill in the connection details. Before starting
 the server, run `source .env` to export the variables to your local environment.
 
+If you want to use with HTTPS, put your certifiates in the app's root directory
+and name them `cert` and `key`. 
+
 ## Run
 
 `node server.js`
