@@ -39,10 +39,41 @@ app.get('/ntee/:ntee', function (req, res) {
   .catch(pgError);
 });
 
+app.get('/orgs', function(req, res) {
+  var eins = req.query.eins.split(',');
+  var params = eins.map(function(item, idx) {return '$' + (idx+1)})
+  var template = 'ein in (' + params.join(',') + ')';
+
+  console.log(eins, params, template);
+
+  var combined = pool.query('select * from combined where ' + template, eins);
+  var bmf = pool.query('select * from eo_mi_bmf_080816 where ' + template, eins);
+
+  Promise.all([bmf, combined])
+  .then(function(data) {
+    var results = [];
+
+    var orgs = _.groupBy(data[1].rows, 'ein');
+    _.each(orgs, function(financials, ein) {
+      var bmf = _.find(data[0].rows, { ein: ein });
+      console.log("Found bmf", bmf);
+      console.log("Searhced", ein, data[0].rows);
+      results.push({
+        info: bmf,
+        data: financials
+      });
+    });
+    res.send(results);
+  })
+  .catch(pgError);
+
+});
+
 app.get('/ein/:ein', function (req, res) {
   var ein = req.params.ein;
-  var combined = pool.query('select * from combined where ein=($1)', [ein]);
-  var bmf = pool.query('select * from eo_mi_bmf_080816 where ein=($1)', [ein]);
+
+  var combined = pool.query('select * from combined where ein=$1', [ein]);
+  var bmf = pool.query('select * from eo_mi_bmf_080816 where ein=$1', [ein]);
 
   Promise.all([bmf, combined])
   .then(function(data) {

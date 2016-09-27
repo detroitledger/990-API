@@ -18,6 +18,21 @@ and name them `cert` and `key`.
 
 ## Use
 
+
+### GET /orgs?eins=123,456,789
+
+Get all data for a list of EINs.
+
+Returns data in this format: 
+
+```
+[{
+  info: { BMF data about the organization }
+  data: [ List of extract data, including assets, revenue, etc]
+}]
+
+```
+
 ### GET /ein/:ein
 
 Get all data for an EIN
