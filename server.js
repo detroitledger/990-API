@@ -44,8 +44,6 @@ app.get('/orgs', function(req, res) {
   var params = eins.map(function(item, idx) {return '$' + (idx+1)})
   var template = 'ein in (' + params.join(',') + ')';
 
-  console.log(eins, params, template);
-
   var combined = pool.query('select * from combined where ' + template, eins);
   var bmf = pool.query('select * from eo_mi_bmf_080816 where ' + template, eins);
 
@@ -56,8 +54,6 @@ app.get('/orgs', function(req, res) {
     var orgs = _.groupBy(data[1].rows, 'ein');
     _.each(orgs, function(financials, ein) {
       var bmf = _.find(data[0].rows, { ein: ein });
-      console.log("Found bmf", bmf);
-      console.log("Searhced", ein, data[0].rows);
       results.push({
         info: bmf,
         data: financials
