@@ -41,3 +41,8 @@ Get all data for an EIN
 
 Get all organizations in Detroit with a specific NTEE code (eg "P20"). Results
 are grouped by organization name.
+
+## Data
+
+* [Notes](https://docs.google.com/document/d/1N7V2kY0zFsJFAcM4nYBds23VmctVLt3iLR2GLpa9mXY/edit)
+* [Field mappings](https://docs.google.com/spreadsheets/d/15nptmUybfM7VINf99RPz86jxegbPtoomhczOsBIuP2M/edit#gid=1622575326)
